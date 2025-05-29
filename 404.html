@@ -34,7 +34,11 @@
         const path = window.location.pathname;
         const appBase = '/Reservario/';
 
-        let redirectPath = window.location.origin + appBase;
+        // Zkontrolujte, zda je basePath URL ve skutečnosti kořenem vaší SPA
+        const baseFileName = 'index.html'; // Název vašeho hlavního souboru SPA
+
+        // Sestavte cílovou URL, která načte vaši SPA aplikaci
+        let redirectPath = window.location.origin + appBase + baseFileName;
 
         // history.replaceState() použijeme k tomu, abychom změnili aktuální záznam historie
         // na hlavní soubor vaší SPA, aniž bychom změnili URL v adresním řádku.

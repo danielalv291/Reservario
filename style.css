@@ -10,14 +10,6 @@ header {
   padding: 10px;
 }
 
-#create-lesson-btn {
-  position: fixed; /* Stays in place relative to the viewport */
-  bottom: 40px;    /* 20 pixels from the bottom edge */
-  right: 40px;     /* 20 pixels from the right edge */
-  z-index: 1000;   /* Ensures it stays on top of other content */
-  height: 100px;
-}
-
 button {
   background-color: #4CAF50;
   color: white;
@@ -34,6 +26,14 @@ button {
 button:hover {
   transform: scale(1.05);
   background-color: #45a049;
+}
+
+#create-lesson-btn { /* fixed in bottom right corner */
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;   /* Ensures it stays on top of other content */
+  height: 100px;
 }
 
 #login-btn {
@@ -211,10 +211,10 @@ input {
 }
 
 .lesson-title {
-  flex: 1; /* Allows the title to take up all available space between date and arrow */
-  overflow: hidden; /* Hides overflowing text */
-  text-overflow: ellipsis; /* Adds "..." for overflowing text */
-  white-space: nowrap; /* Keeps title on a single line */
+  flex: 1; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .lesson-details {
@@ -225,102 +225,100 @@ input {
 }
 
 .lesson-arrow {
-  margin-left: auto; /* Pushes the arrow to the far right */
+  margin-left: auto; /* go right */
   transition: transform 0.3s ease;
-  flex-shrink: 0; /* Prevents shrinking */
+  flex-shrink: 0;
 }
 
 
+/* 600 px is limit for readable calendar (7 columns to 1) */
 @media (max-width: 600px) {
   body {
-    margin: 10px; /* Reduce body margin */
+    margin: 10px;
   }
 
-  /* Adjust header layout for smaller screens */
+
   header {
-    flex-direction: column; /* Stack items vertically */
-    gap: 10px; /* Space between stacked items */
+    flex-direction: column; /* items from row to column */
+    gap: 10px;
     padding: 5px;
   }
 
+
+  button {
+    transform: none;
+    padding: 12px 10px;
+  }
+
   #create-lesson-btn {
-    position: fixed; /* Stays in place relative to the viewport */
-    bottom: 20px;    /* 20 pixels from the bottom edge */
-    right: 20px;     /* 20 pixels from the right edge */
-    z-index: 1000;   /* Ensures it stays on top of other content */
+    bottom: 20px; 
+    right: 20px;  
     height: 70px;
-    text-align: center; /* Center button text */
+    text-align: center;
     margin-top: 10px;
   }
 
   #auth-buttons,
   #user-info {
-      flex-direction: column; /* Stack buttons/info vertically */
-      gap: 5px; /* Reduce gap */
-      margin-left: 0; /* Remove auto margin */
-  }
-
-  button {
-    transform: none;
-    padding: 12px 10px; /* Slightly larger padding for easier tapping */
+      flex-direction: column; 
+      gap: 5px; 
+      margin-left: 0; 
   }
 
   .modal-content {
       margin: 10px; /* Smaller margin */
   }
 
-  /* Calendar adjustments */
+
   #calendar {
-    grid-template-columns: repeat(1, 1fr); /* One column for days on very small screens */
+    grid-template-columns: repeat(1, 1fr);
     margin: 0px;  
   }
 
   .day {
-      min-height: auto; /* Allow days to shrink if content is small */
-      padding: 8px; /* Slightly reduce padding */
+      min-height: auto; 
+      padding: 8px; 
   }
 
-  /* Lesson List Header adjustments */
+
   .lesson-header {
-    flex-wrap: wrap; /* ALLOW ITEMS TO WRAP TO THE NEXT LINE */
-    justify-content: flex-start; /* Align items to the start of each line */
-    padding: 8px 10px; /* Slightly adjust padding for smaller screens */
+    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    padding: 8px 10px; 
     box-sizing: border-box; 
   }
 
   .lesson-status {
-    margin-right: 8px; /* Slightly less margin for tighter spacing */
-    flex-shrink: 0;    /* Don't shrink the icon */
+    margin-right: 8px;
+    flex-shrink: 0; 
     order: 1;
   }
 
   .lesson-date {
-    margin-right: 8px; /* Slightly less margin */
-    white-space: nowrap; /* Keep date on one line if possible */
-    flex-shrink: 0;    /* Don't shrink the date */
+    margin-right: 8px; 
+    white-space: nowrap;
+    flex-shrink: 0;
     order: 2; 
   }
 
   .lesson-title {
-    flex-basis: 100%; /* CRUCIAL: Forces the title to take up 100% of the available width,
-                         pushing it to a new line */
-    min-width: 0;    /* CRUCIAL: Allows the title to shrink below its content width if needed.
-                         This prevents the "width 0" issue. */
-    white-space: normal; /* ALLOW TEXT TO WRAP NATURALLY within the title's box */
-    overflow: hidden;    /* Hide any content that still overflows the container */
-    text-overflow: ellipsis; /* Add ellipsis if a single long word overflows */
-    margin-top: 5px;     /* Add some space above the title when it wraps */
+    flex-basis: 100%; 
+    min-width: 0; 
+    white-space: normal;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    margin-top: 5px;
     order: 4;   
   }
 
   .lesson-arrow {
-    margin-left: auto; /* Push to the far right on its current line */
-    flex-shrink: 0;    /* Don't shrink the arrow */
-    order: 3;          /* Place third, after status and date */
+    margin-left: auto; /* go right */
+    flex-shrink: 0; 
+    order: 3; 
   }
 
   .lesson-details label {
-      display: block; /* Make labels take full width */
+      display: block;
       margin-bottom: 5px;
   }
 }

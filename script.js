@@ -96,7 +96,7 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
   if(id == 'lesson-modal') {
-    const newUrl = window.location.origin + '/main.html';
+    const newUrl = window.location.origin + '/Reservario';
     history.pushState({ page: 'base'}, '', newUrl);
   }
   updateUIBasedOnAuth();
@@ -197,7 +197,7 @@ nextBtn.onclick = () => {
 };
 
 function openLessonModal(lesson) {
-  const newUrl = window.location.origin + `/main.html/lessons/${lesson.id}`;
+  const newUrl = window.location.origin + `/Reservario/lessons/${lesson.id}`;
   history.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
 
   const modal = document.getElementById('lesson-modal');
