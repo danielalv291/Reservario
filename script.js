@@ -7,12 +7,12 @@ function initUsers() {
     users.push({ email: 'instruktor@email.cz', password: 'instruktor@email.cz', role: 'instructor' });
     localStorage.setItem('users', JSON.stringify(users));
   }
-  if (!users.some(u => u.email === 'a')) {
-    users.push({ email: 'a', password: 'a', role: 'user' });
+  if (!users.some(u => u.email === 'user1@email.cz')) {
+    users.push({ email: 'user1@email.cz', password: 'user1@email.cz', role: 'user' });
     localStorage.setItem('users', JSON.stringify(users));
   }
-  if (!users.some(u => u.email === 'b')) {
-    users.push({ email: 'b', password: 'b', role: 'user' });
+  if (!users.some(u => u.email === 'user2@email.cz')) {
+    users.push({ email: 'user2@email.cz', password: 'user2@email.cz', role: 'user' });
     localStorage.setItem('users', JSON.stringify(users));
   }
 }
@@ -27,6 +27,9 @@ const createLessonBtn = document.getElementById('create-lesson-btn');
 document.getElementById('login-btn').onclick = () => {
   openModal('login-modal');
 };
+document.getElementById('close-login').onclick = () => {
+  closeModal('login-modal');
+};
 
 document.getElementById('logout-btn').onclick = () => {
   localStorage.removeItem('currentUser');
@@ -37,10 +40,22 @@ document.getElementById('logout-btn').onclick = () => {
 document.getElementById('register-btn').onclick = () => {
   openModal('register-modal');
 };
+document.getElementById('close-register').onclick = () => {
+  closeModal('register-modal');
+};
 
-document.getElementById('register-submit').onclick = () => {
+const registerForm = document.getElementById('register-form');
+registerForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
+
+  if (!registerForm.checkValidity()) {
+    alert("Zadané údaje nesplňují požadavky.");
+    return;
+  }
+
   const users = JSON.parse(localStorage.getItem('users') || '[]');
   if (users.find(u => u.email === email)) {
     alert('Tento e-mail je již registrován.');
@@ -51,11 +66,21 @@ document.getElementById('register-submit').onclick = () => {
   localStorage.setItem('users', JSON.stringify(users));
   alert('Registrace byla úspěšná. Nyní se přihlaste.');
   closeModal('register-modal');
-};
+});
 
-document.getElementById('login-submit').onclick = () => {
+
+const loginForm = document.getElementById('login-form');
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
+
+  if (!loginForm.checkValidity()) {
+    alert("Zadané údaje nesplňují požadavky.");
+    return;
+  }
+
   const users = JSON.parse(localStorage.getItem('users') || '[]');
   const user = users.find(u => u.email === email && u.password === password);
   if (user) {
@@ -65,7 +90,7 @@ document.getElementById('login-submit').onclick = () => {
   } else {
     alert('Nesprávné přihlašovací údaje.');
   }
-};
+});
 
 document.getElementById('modal-close').onclick = () => {
   closeModal('lesson-modal');
