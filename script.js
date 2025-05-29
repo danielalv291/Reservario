@@ -167,7 +167,7 @@ function renderCalendar() {
             div.classList.add('lesson-available');
           }
           div.textContent = `${lesson.title} (${lesson.date.slice(11, 16)})`;
-          div.onclick = () => openLessonModal(lesson.id);
+          div.onclick = () => showLessonDetails(lesson.id);
           return div;
         });
 
@@ -197,8 +197,9 @@ nextBtn.onclick = () => {
   renderCalendar();
 };
 
-function openLessonModal(lessonId) {
-  const lesson = lessons.find(lesson => lesson.id === id);
+// otvře modální okno s detaily dané lekce
+function showLessonDetails(lessonId) {
+  const lesson = lessons.find(lesson => lesson.id === lessonId);
   if (lesson == null) {
     window.location.href = 'notfound.html';
   }
@@ -227,14 +228,14 @@ function openLessonModal(lessonId) {
       <button onclick="deleteLesson('${lesson.id}')">Smazat</button>
     `;
 
-    // user-friendly date and time picker
+    // user-friendly date/time picker
     flatpickr("#edit-date-cal", {
       enableTime: true,
       dateFormat: "d-m-Y H:i",
       time_24hr: true,
       defaultDate: lesson.date
     });
-  } else {
+  } else { // user (not instructor)
     const alreadyJoined = (lesson.participants || []).includes(currentUser.email);
     const capacityFull = participantCount >= lesson.capacity ? true : false;
     detail.innerHTML = `
@@ -243,7 +244,7 @@ function openLessonModal(lessonId) {
       <p>Datum a čas: ${lesson.date}</p>
       <p>Kapacita: ${lesson.capacity}</p>
       <p>Obsazenost: ${participantCount}</p>
-      ${new Date(lesson.date) < new Date()  // TODO
+      ${new Date(lesson.date) < new Date()  // TODO check funguje?
         ? `<p>Událost již proběhla</p>`
         : alreadyJoined
         ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
@@ -306,7 +307,7 @@ createLessonBtn.onclick = () => {
   lessons.push(newLesson);
   localStorage.setItem('lessons', JSON.stringify(lessons));
   renderCalendar();
-  openLessonModal(newLesson.id);
+  showLessonDetails(newLesson.id);
 };
 
 function deleteLesson(lessonId) {
@@ -441,7 +442,7 @@ function initializeAppStateFromUrl() {
     const lessonId = path.split('/Reservario/lessons')[1];
     if (lessonId && lessons.some(lesson => lesson.id === lessonId)) {
       updateHeader();
-      openLessonModal(lessonId);    
+      showLessonDetails(lessonId);    
       pageState = { page: 'lessonDetail', id: lessonId };
       history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
     } else {
@@ -466,7 +467,7 @@ window.addEventListener('popstate', function(event) {
       case 'lessonDetail':
         if (state.id && lessons.some(l => l.id === state.id)) { // TODO rename state.id
           updateHeader();
-          openLessonModal(state.id);
+          showLessonDetails(state.id);
         }  else {
           window.location.href = 'notfound.html';
         }
