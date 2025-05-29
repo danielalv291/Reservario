@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservario</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Reservario logo" width="300">
+    <button id="create-lesson-btn" style="display:none;">Nová lekce</button>
+    <div id="user-info"></div>
+    <div id="auth-buttons">
+      <button id="login-btn">Přihlásit</button>
+      <button id="register-btn">Registrovat</button>
+    </div>
+    <button id="logout-btn">Odhlásit</button>
+  </header>
+
+  <main>
+    <h1>Kalendář lekcí</h1>
+    <div id="calendar-header">
+      <button id="prev-month"><</button>
+      <span id="month-label"></span>
+      <button id="next-month">></button>
+    </div>
+    <div id="calendar"></div>
+
+    <h1>Seznam plánovaných lekcí</h1>
+    <div id="lesson-list"></div>
+
+    <h1>Náš sportovní podcast: Reservario Talks</h1>
+      <p>
+        Sledujte náš pravidelný podcast, kde se věnujeme sportovním tématům, rozhovorům s trenéry, tipům na trénink
+        a zákulisním informacím ze světa Reservaria!
+      </p>
+      <p>
+        Poslouchejte nás na platformách jako Spotify, Apple Podcasts nebo přímo zde na stránce.
+      </p>
+
+      <div">
+        <h3>Nejnovější epizoda</h3>
+        <p><strong>Téma:</strong> Jak připravit efektivní sportovní lekci</p>
+        <audio controls style="width: 100%; max-width: 600px;">
+          <source src="epizoda1.mp3" type="audio/mpeg">
+          Váš prohlížeč nepodporuje přehrávání audio souborů.
+        </audio>
+      </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="lesson-modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="modal-close">&times;</span>
+      <div id="lesson-detail"></div>
+    </div>
+  </div>
+
+  <!-- Modální okno pro přihlášení -->
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Přihlášení</h2>
+      <input type="email" id="login-email" placeholder="E-mail">
+      <input type="password" id="login-password" placeholder="Heslo">
+      <button id="login-submit">Přihlásit</button>
+      <button onclick="closeModal('login-modal')">Zavřít</button>
+    </div>
+  </div>
+
+  <!-- Modální okno pro registraci -->
+  <div id="register-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Registrace</h2>
+      <input type="email" id="register-email" placeholder="E-mail">
+      <input type="password" id="register-password" placeholder="Heslo">
+      <button id="register-submit">Registrovat</button>
+      <button onclick="closeModal('register-modal')">Zavřít</button>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="calendar.js"></script>
+</body>
+</html>

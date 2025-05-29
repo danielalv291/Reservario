@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Stránka nenalezena | Reservario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Zajistí, že stránka vyplní celou výšku okna */
+            margin: 0;
+            background-color: #f4f4f4; /* Světle šedé pozadí */
+            color: #333;
+            text-align: center;
+            padding: 20px; /* Vnitřní odsazení pro menší obrazovky */
+            box-sizing: border-box; /* Zahrne padding do celkové šířky/výšky */
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px; /* Maximální šířka obsahu */
+            width: 100%; /* Zajistí, že se přizpůsobí menším obrazovkám */
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 250px; /* Velikost loga */
+            height: auto;
+            display: block; /* Odstraní případné spodní mezery */
+            margin: 0 auto; /* Vycentruje logo */
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #dc3545; /* Červená barva pro 404 */
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #6c757d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .back-button {
+            background-color: #007bff; /* Modré tlačítko */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Odstraní podtržení u odkazu */
+            display: inline-block; /* Aby padding a margin fungovaly správně */
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responzivní úpravy pro velmi malé obrazovky */
+        @media (max-width: 400px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .logo img {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Reservario logo">
+        </div>
+        <h1>404 - Stránka nenalezena</h1>
+        <p>
+            Je nám líto, ale stránka, kterou hledáte, se nepodařilo nalézt.
+            Zkontrolujte prosím URL adresu nebo se vraťte na hlavní stránku.
+        </p>
+        <a href="index.html" class="back-button">Zpět na hlavní stránku</a>
+    </div>
+</body>
+</html>

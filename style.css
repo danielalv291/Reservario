@@ -1,0 +1,326 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+#create-lesson-btn {
+  position: fixed; /* Stays in place relative to the viewport */
+  bottom: 40px;    /* 20 pixels from the bottom edge */
+  right: 40px;     /* 20 pixels from the right edge */
+  z-index: 1000;   /* Ensures it stays on top of other content */
+  height: 100px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 18px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.5s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #45a049;
+}
+
+#login-btn {
+  background-color: #4CAF50; /* green */
+}
+#login-btn:hover {
+  background-color: #45a049;
+}
+
+#register-btn {
+  background-color: #2196F3; /* blue */
+}
+#register-btn:hover {
+  background-color: #1e88e5;
+}
+
+#logout-btn {
+  background-color: #f44336; /* red */
+}
+#logout-btn:hover {
+  background-color: #e53935;
+}
+
+#auth-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+#user-info {
+  text-align: right;
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 300px;
+  text-align: center;
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+
+#modal-close {
+  position: absolute;
+  top: 5px; right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+#calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  font-size: 1.2em;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.day {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 100px;
+  overflow: hidden;
+}
+
+.lesson-entry {
+  padding: 4px 8px;
+  margin: 4px 0;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.lesson-signed {
+  background-color: #4CAF50; /* green */
+}
+.lesson-full {
+  background-color: #f44336; /* red */
+}
+.lesson-past {
+  background-color: #888888; /* gray */
+}
+.lesson-available {
+  background-color: #2196F3; /* blue */
+}
+
+/* for lesson list */
+.lesson-row {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 8px;
+  background: #f9f9f9;
+  transition: all 0.2s;
+}
+
+.lesson-row:hover {
+  background-color: #f4f4f4;
+}
+
+.lesson-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lesson-status {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.status-signed {
+  background-color: #4CAF50; /* green */
+}
+.status-full {
+  background-color: #f44336; /* red */
+}
+.status-past {
+  background-color: #888888; /* grey */
+}
+.status-available {
+  background-color: #2196F3; /* blue */
+}
+
+.lesson-date {
+  font-size: 0.9rem;
+  color: #555;
+  white-space: nowrap;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.lesson-title {
+  flex: 1; /* Allows the title to take up all available space between date and arrow */
+  overflow: hidden; /* Hides overflowing text */
+  text-overflow: ellipsis; /* Adds "..." for overflowing text */
+  white-space: nowrap; /* Keeps title on a single line */
+}
+
+.lesson-details {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+  position: relative;
+}
+
+.lesson-arrow {
+  margin-left: auto; /* Pushes the arrow to the far right */
+  transition: transform 0.3s ease;
+  flex-shrink: 0; /* Prevents shrinking */
+}
+
+
+@media (max-width: 600px) {
+  body {
+    margin: 10px; /* Reduce body margin */
+  }
+
+  /* Adjust header layout for smaller screens */
+  header {
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Space between stacked items */
+    padding: 5px;
+  }
+
+  #create-lesson-btn {
+    position: fixed; /* Stays in place relative to the viewport */
+    bottom: 20px;    /* 20 pixels from the bottom edge */
+    right: 20px;     /* 20 pixels from the right edge */
+    z-index: 1000;   /* Ensures it stays on top of other content */
+    height: 70px;
+    text-align: center; /* Center button text */
+    margin-top: 10px;
+  }
+
+  #auth-buttons,
+  #user-info {
+      flex-direction: column; /* Stack buttons/info vertically */
+      gap: 5px; /* Reduce gap */
+      margin-left: 0; /* Remove auto margin */
+  }
+
+  button {
+    transform: none;
+    padding: 12px 10px; /* Slightly larger padding for easier tapping */
+  }
+
+  .modal-content {
+      margin: 10px; /* Smaller margin */
+  }
+
+  /* Calendar adjustments */
+  #calendar {
+    grid-template-columns: repeat(1, 1fr); /* One column for days on very small screens */
+    margin: 0px;  
+  }
+
+  .day {
+      min-height: auto; /* Allow days to shrink if content is small */
+      padding: 8px; /* Slightly reduce padding */
+  }
+
+  /* Lesson List Header adjustments */
+  .lesson-header {
+    flex-wrap: wrap; /* ALLOW ITEMS TO WRAP TO THE NEXT LINE */
+    justify-content: flex-start; /* Align items to the start of each line */
+    padding: 8px 10px; /* Slightly adjust padding for smaller screens */
+    box-sizing: border-box; 
+  }
+
+  .lesson-status {
+    margin-right: 8px; /* Slightly less margin for tighter spacing */
+    flex-shrink: 0;    /* Don't shrink the icon */
+    order: 1;
+  }
+
+  .lesson-date {
+    margin-right: 8px; /* Slightly less margin */
+    white-space: nowrap; /* Keep date on one line if possible */
+    flex-shrink: 0;    /* Don't shrink the date */
+    order: 2; 
+  }
+
+  .lesson-title {
+    flex-basis: 100%; /* CRUCIAL: Forces the title to take up 100% of the available width,
+                         pushing it to a new line */
+    min-width: 0;    /* CRUCIAL: Allows the title to shrink below its content width if needed.
+                         This prevents the "width 0" issue. */
+    white-space: normal; /* ALLOW TEXT TO WRAP NATURALLY within the title's box */
+    overflow: hidden;    /* Hide any content that still overflows the container */
+    text-overflow: ellipsis; /* Add ellipsis if a single long word overflows */
+    margin-top: 5px;     /* Add some space above the title when it wraps */
+    order: 4;   
+  }
+
+  .lesson-arrow {
+    margin-left: auto; /* Push to the far right on its current line */
+    flex-shrink: 0;    /* Don't shrink the arrow */
+    order: 3;          /* Place third, after status and date */
+  }
+
+  .lesson-details label {
+      display: block; /* Make labels take full width */
+      margin-bottom: 5px;
+  }
+}
