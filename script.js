@@ -435,6 +435,7 @@ function renderLessonList() {
 
 // Určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
+  function handleOnlineStatusChange();
   const path = window.location.pathname;
 
   if (path === '/Reservario' || path === '/Reservario/') {
@@ -463,7 +464,6 @@ function initializeAppStateFromUrl() {
 document.addEventListener('DOMContentLoaded', initializeAppStateFromUrl);
 
 window.addEventListener('popstate', function(event) {
-  handleOnlineStatusChange();
   const state = event.state;
 
   if (state) {
@@ -531,10 +531,10 @@ function displayOnlineMessage() {
 
 function handleOnlineStatusChange() {
   if (navigator.onLine) {
-    console.log("Připojení obnoveno.");
+    console.log("Jste online.");
     displayOnlineMessage();
   } else {
-    console.log("Připojení ztraceno.");
+    console.log("Jste offline.");
     displayOfflineMessage();
   }
 }
