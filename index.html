@@ -20,34 +20,40 @@
   </header>
 
   <main>
-    <h1>Kalendář lekcí</h1>
-    <div id="calendar-header">
-      <button id="prev-month"><</button>
-      <span id="month-label"></span>
-      <button id="next-month">></button>
-    </div>
-    <div id="calendar"></div>
-
-    <h1>Seznam plánovaných lekcí</h1>
-    <div id="lesson-list"></div>
-
-    <h1>Náš sportovní podcast: Reservario Talks</h1>
-      <p>
-        Sledujte náš pravidelný podcast, kde se věnujeme sportovním tématům, rozhovorům s trenéry, tipům na trénink
-        a zákulisním informacím ze světa Reservaria!
-      </p>
-      <p>
-        Poslouchejte nás na platformách jako Spotify, Apple Podcasts nebo přímo zde na stránce.
-      </p>
-
-      <div">
-        <h3>Nejnovější epizoda</h3>
-        <p><strong>Téma:</strong> Jak připravit efektivní sportovní lekci</p>
-        <audio controls style="width: 100%; max-width: 600px;">
-          <source src="epizoda1.mp3" type="audio/mpeg">
-          Váš prohlížeč nepodporuje přehrávání audio souborů.
-        </audio>
+    <section>
+      <h1>Kalendář lekcí</h1>
+      <div id="calendar-header">
+        <button id="prev-month"><</button>
+        <span id="month-label"></span>
+        <button id="next-month">></button>
       </div>
+      <div id="calendar"></div>
+    </section>
+
+    <section>
+      <h1>Seznam plánovaných lekcí</h1>
+      <div id="lesson-list"></div>
+    </section>
+
+    <section>
+      <h1>Náš sportovní podcast: Reservario Talks</h1>
+        <p>
+          Sledujte náš pravidelný podcast, kde se věnujeme sportovním tématům, rozhovorům s trenéry, tipům na trénink
+          a zákulisním informacím ze světa Reservaria!
+        </p>
+        <p>
+          Poslouchejte nás na platformách jako Spotify, Apple Podcasts nebo přímo zde na stránce.
+        </p>
+
+        <article>
+          <h3>Nejnovější epizoda</h3>
+          <p><strong>Téma:</strong> Jak připravit efektivní sportovní lekci</p>
+          <audio controls style="width: 100%; max-width: 600px;">
+            <source src="epizoda1.mp3" type="audio/mpeg">
+            Váš prohlížeč nepodporuje přehrávání audio souborů.
+          </audio>
+        </article>
+      </section>
   </main>
 
   <!-- Modální okno pro detail lekce -->
@@ -79,6 +85,10 @@
       <button onclick="closeModal('register-modal')">Zavřít</button>
     </div>
   </div>
+
+  <footer>
+    <p>&copy; 2025 Reservario. Všechna práva vyhrazena.</p>
+  </footer>
   
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="script.js"></script>

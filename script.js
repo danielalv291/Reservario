@@ -102,7 +102,8 @@ function updateHeader() {
     createLessonBtn.style.display = 'none';
   }
 
-  renderCalendar(); // TODO move
+  renderCalendar();
+  renderLessonList();
 }
 
 
@@ -157,7 +158,7 @@ function renderCalendar() {
         .map(lesson => {
           const div = document.createElement('div');
           div.className = 'lesson-entry';
-          if (new Date(lesson.date) < new Date()) {
+          if (lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i")) {
             div.classList.add('lesson-past');
           } else if (lesson.participants?.includes(currentUser?.email)) {
             div.classList.add('lesson-signed');
@@ -177,7 +178,6 @@ function renderCalendar() {
 
     calendarEl.appendChild(dayEl);
   }
-  renderLessonList() // TODO
 }
 
 // tlačítka pro posun kalendáře
@@ -247,7 +247,7 @@ function showLessonDetails(lessonId) {
       <p>Datum a čas: ${lesson.date}</p>
       <p>Kapacita: ${lesson.capacity}</p>
       <p>Obsazenost: ${participantCount}</p>
-      ${new Date(lesson.date) < new Date()  // TODO check funguje?
+      ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i") // TODO check funguje?
         ? `<p>Událost již proběhla</p>`
         : alreadyJoined
         ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
@@ -272,6 +272,7 @@ function saveLessonEdit(lessonId, modalId) {
   closeModal('lesson-modal');
 
   renderCalendar();
+  renderLessonList();
 }
 
 // join/leave lesson
@@ -295,6 +296,7 @@ function toggleJoin(id) {
 
   localStorage.setItem('lessons', JSON.stringify(lessons));
   renderCalendar();
+  renderLessonList();
   closeModal('lesson-modal');
 }
 
@@ -310,6 +312,7 @@ createLessonBtn.onclick = () => {
   lessons.push(newLesson);
   localStorage.setItem('lessons', JSON.stringify(lessons));
   renderCalendar();
+  renderLessonList();
   showLessonDetails(newLesson.id);
 };
 
@@ -320,6 +323,7 @@ function deleteLesson(lessonId) {
   localStorage.setItem('lessons', JSON.stringify(lessons));
 
   renderCalendar();
+  renderLessonList();
   closeModal('lesson-modal');
 }
 
@@ -409,7 +413,7 @@ function renderLessonList() {
           <p><strong>Popis:</strong> ${lesson.description}</p>
           <p><strong>Kapacita:</strong> ${lesson.capacity}</p>
           <p><strong>Přihlášeno:</strong> ${participantCount}</p>
-          ${new Date(lesson.date) < new Date() 
+          ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i") // TODO chekc funguje?
             ? `<p>Událost již proběhla</p>`
             : alreadyJoined
             ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
