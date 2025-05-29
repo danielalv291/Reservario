@@ -117,9 +117,9 @@ let currentMonth = new Date().getMonth();
 
 const monthLabel = document.getElementById('month-label');
 const prevBtn = document.getElementById('prev-month');
-prevMonthButton.appendChild(createArrowSVG('left'));
+prevBtn.appendChild(createArrowSVG('left'));
 const nextBtn = document.getElementById('next-month');
-nextMonthButton.appendChild(createArrowSVG('right'));
+nextBtn.appendChild(createArrowSVG('right'));
 
 let lessons = JSON.parse(localStorage.getItem('lessons') || '[]');
 const calendarEl = document.getElementById('calendar');
