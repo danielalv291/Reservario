@@ -12,7 +12,7 @@ function initUsers() {
     localStorage.setItem('users', JSON.stringify(users));
   }
 }
-initUsers();
+initUsers(); // TODO move
 
 let currentUser;
 
@@ -20,59 +20,19 @@ const authBtns = document.getElementById('auth-buttons');
 const logoutBtn = document.getElementById('logout-btn');
 const createLessonBtn = document.getElementById('create-lesson-btn');
 
-function updateUIBasedOnAuth() {
-  currentUser = JSON.parse(localStorage.getItem('currentUser') || null);
-  const userInfo = document.getElementById('user-info');
-  
-  if (currentUser != null) {
-    logoutBtn.style.display = 'inline-block';
-    authBtns.style.display = 'none';
-    userInfo.textContent = `Přihlášen jako: ${currentUser.email}`;
-  } else {
-    logoutBtn.style.display = 'none';
-    authBtns.style.display = 'inline-block';
-    userInfo.textContent = ``;
-  }
-
-  if (currentUser != null && currentUser.role != null && currentUser.role === 'instructor') {
-    createLessonBtn.style.display = 'inline-block';
-  } else {
-    createLessonBtn.style.display = 'none';
-  }
-
-  renderCalendar();
-}
-
 document.getElementById('login-btn').onclick = () => {
   openModal('login-modal');
 };
 
 document.getElementById('logout-btn').onclick = () => {
-  logout()
+  localStorage.removeItem('currentUser');
+  updateHeader();
 };
+
 
 document.getElementById('register-btn').onclick = () => {
   openModal('register-modal');
 };
-
-document.getElementById('login-submit').onclick = () => {
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-  const users = JSON.parse(localStorage.getItem('users') || '[]');
-  const user = users.find(u => u.email === email && u.password === password);
-  if (user) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    closeModal('login-modal');
-    updateUIBasedOnAuth();
-  } else {
-    alert('Nesprávné přihlašovací údaje.');
-  }
-};
-
-function logout() {
-  localStorage.removeItem('currentUser');
-  updateUIBasedOnAuth();
-}
 
 document.getElementById('register-submit').onclick = () => {
   const email = document.getElementById('register-email').value;
@@ -85,8 +45,26 @@ document.getElementById('register-submit').onclick = () => {
   const newUser = { email, password, role: 'user' };
   users.push(newUser);
   localStorage.setItem('users', JSON.stringify(users));
-  alert('Registrace úspěšná. Nyní se přihlaste.');
+  alert('Registrace byla úspěšná. Nyní se přihlaste.');
   closeModal('register-modal');
+};
+
+document.getElementById('login-submit').onclick = () => {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const user = users.find(u => u.email === email && u.password === password);
+  if (user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    closeModal('login-modal');
+    updateHeader();
+  } else {
+    alert('Nesprávné přihlašovací údaje.');
+  }
+};
+
+document.getElementById('modal-close').onclick = () => {
+  closeModal('lesson-modal');
 };
 
 function openModal(id) {
@@ -99,12 +77,34 @@ function closeModal(id) {
     const newUrl = window.location.origin + '/Reservario';
     history.pushState({ page: 'base'}, '', newUrl);
   }
-  updateUIBasedOnAuth();
+  updateHeader();
 }
 
-document.getElementById('modal-close').onclick = () => {
-  closeModal('lesson-modal');
-};
+
+function updateHeader() {
+  currentUser = JSON.parse(localStorage.getItem('currentUser') || null);
+  const userInfo = document.getElementById('user-info');
+  
+  if (currentUser != null) {
+    logoutBtn.style.display = 'inline-block';
+    authBtns.style.display = 'none';
+    userInfo.textContent = `Přihlášen jako: ${currentUser.email}`;
+  } else { // user is guest -> don't show lessons
+    logoutBtn.style.display = 'none';
+    authBtns.style.display = 'inline-block';
+    userInfo.textContent = ``;
+  }
+
+  // show create lesson button only for instructors
+  if (currentUser && currentUser.role && currentUser.role === 'instructor') {
+    createLessonBtn.style.display = 'inline-block';
+  } else {
+    createLessonBtn.style.display = 'none';
+  }
+
+  renderCalendar(); // TODO move
+}
+
 
 
 let currentYear = new Date().getFullYear();
@@ -117,6 +117,7 @@ const nextBtn = document.getElementById('next-month');
 let lessons = JSON.parse(localStorage.getItem('lessons') || '[]');
 const calendarEl = document.getElementById('calendar');
 
+// Zobrazuje dny v aktuálním měsíci, u dne jsou zobrazené vypsané lekce
 function renderCalendar() {
   const year = currentYear;
   const month = currentMonth;
@@ -175,7 +176,7 @@ function renderCalendar() {
 
     calendarEl.appendChild(dayEl);
   }
-  renderLessonList()
+  renderLessonList() // TODO
 }
 
 // tlačítka pro posun kalendáře
@@ -197,7 +198,7 @@ nextBtn.onclick = () => {
 };
 
 function openLessonModal(lessonId) {
-  let lesson = lessons.some(l => l.id === lessonId);
+  const lesson = lessons.find(lesson => lesson.id === id);
   if (lesson == null) {
     window.location.href = 'notfound.html';
   }
@@ -420,7 +421,7 @@ function renderLessonList() {
   });
 }
 
-updateUIBasedOnAuth()
+updateHeader()
 
 
 // Funkce, která určí, jaký stav aplikace má být načten na základě URL
@@ -430,7 +431,7 @@ function initializeAppStateFromUrl() {
   const path = window.location.pathname;
 
   if (path === '/Reservario' || path === '/Reservario/') {
-    updateUIBasedOnAuth();
+    updateHeader();
     expandedLessonId = null;
     if (document.getElementById('lesson-modal')) {
        document.getElementById('lesson-modal').classList.add('hidden');
@@ -439,7 +440,7 @@ function initializeAppStateFromUrl() {
   } else if (path.startsWith('/Reservario/lessons')) {
     const lessonId = path.split('/Reservario/lessons')[1];
     if (lessonId && lessons.some(lesson => lesson.id === lessonId)) {
-      updateUIBasedOnAuth();
+      updateHeader();
       openLessonModal(lessonId);    
       pageState = { page: 'lessonDetail', id: lessonId };
       history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
@@ -464,7 +465,7 @@ window.addEventListener('popstate', function(event) {
     switch (state.page) {
       case 'lessonDetail':
         if (state.id && lessons.some(l => l.id === state.id)) { // TODO rename state.id
-          updateUIBasedOnAuth();
+          updateHeader();
           openLessonModal(state.id);
         }  else {
           window.location.href = 'notfound.html';
@@ -473,7 +474,7 @@ window.addEventListener('popstate', function(event) {
         break;
       case 'base':
         document.getElementById('lesson-modal').classList.add('hidden');
-        updateUIBasedOnAuth();
+        updateHeader();
         break;
       default:
         window.location.href = 'notfound.html';
