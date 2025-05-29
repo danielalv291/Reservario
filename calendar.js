@@ -96,8 +96,8 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
   if(id == 'lesson-modal') {
-    //xconst newUrl = window.location.origin + '/main.html';
-    //xhistory.pushState({ page: 'base'}, '', newUrl);
+    const newUrl = window.location.origin + '/main.html';
+    history.pushState({ page: 'base'}, '', newUrl);
   }
   updateUIBasedOnAuth();
 }
@@ -197,8 +197,8 @@ nextBtn.onclick = () => {
 };
 
 function openLessonModal(lesson) {
-  //xconst newUrl = window.location.origin + `/main.html/lessons/${lesson.id}`;
-  //xhistory.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
+  const newUrl = window.location.origin + `/main.html/lessons/${lesson.id}`;
+  history.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
 
   const modal = document.getElementById('lesson-modal');
   const detail = document.getElementById('lesson-detail');
@@ -417,7 +417,7 @@ function renderLessonList() {
 
 updateUIBasedOnAuth()
 
-/*
+
 // Funkce, která určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
   console.log("a");
@@ -461,7 +461,7 @@ window.addEventListener('popstate', function(event) {
           openLessonModal(lessons.some(l => l.id === state.id));
         }  else {
           // Lekce s daným ID nebyla nalezena, přesměrovat na not found
-          //xwindow.location.href = 'notfound.html';
+          window.location.href = 'notfound.html';
         }
 
         break;
@@ -470,7 +470,7 @@ window.addEventListener('popstate', function(event) {
         updateUIBasedOnAuth();
         break;
       default:
-        //xwindow.location.href = 'notfound.html';
+        window.location.href = 'notfound.html';
         break;
     }
   } else {
@@ -485,4 +485,3 @@ window.addEventListener('popstate', function(event) {
     }
   }
 });
-*/
