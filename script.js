@@ -168,6 +168,7 @@ function renderCalendar() {
           }
           div.textContent = `${lesson.title} (${lesson.date.slice(11, 16)})`;
           div.onclick = () => showLessonDetails(lesson.id);
+          console.log(lesson.id); // TODO remove
           return div;
         });
 
@@ -199,6 +200,8 @@ nextBtn.onclick = () => {
 
 // otvře modální okno s detaily dané lekce
 function showLessonDetails(lessonId) {
+  console.log(lessonId); // TODO remove
+  console.log(lessons); // TODO remove
   const lesson = lessons.find(lesson => lesson.id === lessonId);
   if (lesson == null) {
     window.location.href = 'notfound.html';
@@ -323,6 +326,7 @@ function deleteLesson(lessonId) {
 
 let expandedLessonId = null;
 
+// show list of future lessons also below calendar, can show/hide details on click
 function renderLessonList() {
   const listEl = document.getElementById('lesson-list');
   listEl.innerHTML = '';
@@ -369,7 +373,7 @@ function renderLessonList() {
 
     container.appendChild(header);
 
-    if (isExpanded) {
+    if (isExpanded) { // show details, instructor can edit data
       const participantCount = (lesson.participants || []).length;
       const capacityFull = participantCount >= lesson.capacity;
 
@@ -422,12 +426,12 @@ function renderLessonList() {
   });
 }
 
-updateHeader()
+updateHeader(); // TODO is necessary
 
 
-// Funkce, která určí, jaký stav aplikace má být načten na základě URL
+// Určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
-  // TODO init data
+  // TODO init data ?
 
   const path = window.location.pathname;
 
@@ -453,16 +457,13 @@ function initializeAppStateFromUrl() {
   }
 }
 
-// Zavolejte tuto funkci po načtení DOM a inicializaci dat
+// po načtení DOM inicializuj aplikaci
 document.addEventListener('DOMContentLoaded', initializeAppStateFromUrl);
-// Ujistěte se, že `lessons` data jsou již načtená, než renderLessonList() zavoláte.
 
 window.addEventListener('popstate', function(event) {
-  // Event.state obsahuje objekt stavu, který jste uložili pomocí pushState()
   const state = event.state;
 
   if (state) {
-    // Na základě uloženého stavu vykreslete správný obsah
     switch (state.page) {
       case 'lessonDetail':
         if (state.id && lessons.some(l => l.id === state.id)) { // TODO rename state.id
@@ -471,7 +472,6 @@ window.addEventListener('popstate', function(event) {
         }  else {
           window.location.href = 'notfound.html';
         }
-
         break;
       case 'base':
         document.getElementById('lesson-modal').classList.add('hidden');
