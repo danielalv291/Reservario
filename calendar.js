@@ -96,8 +96,8 @@ function openModal(id) {
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
   if(id == 'lesson-modal') {
-    const newUrl = window.location.origin + '/main.html';
-    history.pushState({ page: 'base'}, '', newUrl);
+    //xconst newUrl = window.location.origin + '/main.html';
+    //xhistory.pushState({ page: 'base'}, '', newUrl);
   }
   updateUIBasedOnAuth();
 }
@@ -197,8 +197,8 @@ nextBtn.onclick = () => {
 };
 
 function openLessonModal(lesson) {
-  const newUrl = window.location.origin + `/main.html/lessons/${lesson.id}`;
-  history.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
+  //xconst newUrl = window.location.origin + `/main.html/lessons/${lesson.id}`;
+  //xhistory.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
 
   const modal = document.getElementById('lesson-modal');
   const detail = document.getElementById('lesson-detail');
@@ -417,7 +417,7 @@ function renderLessonList() {
 
 updateUIBasedOnAuth()
 
-
+/*
 // Funkce, která určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
   console.log("a");
@@ -436,11 +436,11 @@ function initializeAppStateFromUrl() {
           openLessonModal(less);
           history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
         } else {
-            window.location.href = '/notfound.html';
+            window.location.href = 'notfound.html';
         }
     } else {
         // Jakákoli jiná neznámá URL
-        window.location.href = '/notfound.html';
+        window.location.href = 'notfound.html';
     }
 }
 
@@ -461,7 +461,7 @@ window.addEventListener('popstate', function(event) {
           openLessonModal(lessons.some(l => l.id === state.id));
         }  else {
           // Lekce s daným ID nebyla nalezena, přesměrovat na not found
-          window.location.href = '/notfound.html';
+          //xwindow.location.href = 'notfound.html';
         }
 
         break;
@@ -470,7 +470,7 @@ window.addEventListener('popstate', function(event) {
         updateUIBasedOnAuth();
         break;
       default:
-        window.location.href = '/notfound.html';
+        //xwindow.location.href = 'notfound.html';
         break;
     }
   } else {
@@ -481,7 +481,8 @@ window.addEventListener('popstate', function(event) {
        }
        expandedLessonId = null;
     } else {
-      window.location.href = '/notfound.html';
+      window.location.href = 'notfound.html';
     }
   }
 });
+*/
