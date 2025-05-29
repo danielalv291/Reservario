@@ -435,7 +435,7 @@ function renderLessonList() {
 
 // Určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
-  function handleOnlineStatusChange();
+  handleOnlineStatusChange();
   const path = window.location.pathname;
 
   if (path === '/Reservario' || path === '/Reservario/') {
