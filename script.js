@@ -463,6 +463,7 @@ function initializeAppStateFromUrl() {
 document.addEventListener('DOMContentLoaded', initializeAppStateFromUrl);
 
 window.addEventListener('popstate', function(event) {
+  handleOnlineStatusChange();
   const state = event.state;
 
   if (state) {
@@ -514,6 +515,7 @@ window.addEventListener('offline', handleOnlineStatusChange);
 function displayOfflineMessage() {
   const statusElement = document.getElementById('network-status');
   if (statusElement) {
+    statusElement.textContent = "Jste offline. Aplikace nemusí fungovat správně.";
     statusElement.style.display = 'block';
   }
 }
@@ -522,6 +524,7 @@ window.addEventListener('online', handleOnlineStatusChange);
 function displayOnlineMessage() {
   const statusElement = document.getElementById('network-status');
   if (statusElement) {
+    statusElement.textContent = "";
     statusElement.style.display = 'none';
   }
 }
