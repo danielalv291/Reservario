@@ -420,28 +420,30 @@ updateUIBasedOnAuth()
 
 // Funkce, která určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
-  console.log("a");
-    const path = window.location.pathname;
-    const lessonIdMatch = path.match(/\/lessons\/(\d+)/); // Regex pro zachycení ID
+  // TODO init data
 
-    if (path.endsWith('/index.html') || path === '/') {
-        updateUIBasedOnAuth();
-        expandedLessonId = null;
-        history.replaceState({ page: 'base' }, '', path);
-    } else if (lessonIdMatch) {
-        const lessonId = lessonIdMatch[1];
-        less = lessons.some(l => l.id === lessonId)
-        if (less) {
-          updateUIBasedOnAuth();
-          openLessonModal(less);
-          history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
-        } else {
-            window.location.href = 'notfound.html';
-        }
-    } else {
-        // Jakákoli jiná neznámá URL
-        window.location.href = 'notfound.html';
+  const path = window.location.pathname;
+
+  if (path === '/Reservario' || path === '/Reservario/') {
+    updateUIBasedOnAuth();
+    expandedLessonId = null;
+    if (document.getElementById('lesson-modal')) {
+       document.getElementById('lesson-modal').classList.add('hidden');
     }
+    history.replaceState({ page: 'base' }, '', path);
+  } else if (path.startsWith('/Reservario/lessons')) {
+    const lessonId = path.split('/Reservario/lessons')[1];
+    if (lessonId && lessons.some(lesson => lesson.id === lessonId)) {
+      updateUIBasedOnAuth();
+      openLessonModal(less);    
+      pageState = { page: 'lessonDetail', id: lessonId };
+      history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
+    } else {
+      window.location.href = 'notfound.html';
+    }
+  } else {
+    window.location.href = 'notfound.html';
+  }
 }
 
 // Zavolejte tuto funkci po načtení DOM a inicializaci dat
@@ -474,14 +476,6 @@ window.addEventListener('popstate', function(event) {
         break;
     }
   } else {
-    if (window.location.pathname.endsWith('/index.html') || window.location.pathname === '/') {
-       updateUIBasedOnAuth();
-       if (document.getElementById('lesson-modal')) {
-           document.getElementById('lesson-modal').classList.add('hidden');
-       }
-       expandedLessonId = null;
-    } else {
-      window.location.href = 'notfound.html';
-    }
+    initializeAppStateFromUrl();
   }
 });
