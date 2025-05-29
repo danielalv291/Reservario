@@ -16,7 +16,7 @@ function initUsers() {
     localStorage.setItem('users', JSON.stringify(users));
   }
 }
-initUsers(); // TODO move
+initUsers();
 
 let currentUser;
 
@@ -175,7 +175,6 @@ function renderCalendar() {
           }
           div.textContent = `${lesson.title} (${lesson.date.slice(11, 16)})`;
           div.onclick = () => showLessonDetails(lesson.id);
-          console.log(lesson.id); // TODO remove
           return div;
         });
 
@@ -206,14 +205,11 @@ nextBtn.onclick = () => {
 
 // otvře modální okno s detaily dané lekce
 function showLessonDetails(lessonId) {
-  console.log(lessonId); // TODO remove
-  console.log(lessons); // TODO remove
   const lesson = lessons.find(lesson => lesson.id === lessonId);
   if (lesson == null) {
     window.location.href = 'notfound.html';
   }
       
-  console.log(lesson); // TODO
   const newUrl = window.location.origin + `/Reservario/lessons/${lesson.id}`;
   history.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
 
@@ -253,7 +249,7 @@ function showLessonDetails(lessonId) {
       <p>Datum a čas: ${lesson.date}</p>
       <p>Kapacita: ${lesson.capacity}</p>
       <p>Obsazenost: ${participantCount}</p>
-      ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i") // TODO check funguje?
+      ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i")
         ? `<p>Událost již proběhla</p>`
         : alreadyJoined
         ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
@@ -419,7 +415,7 @@ function renderLessonList() {
           <p><strong>Popis:</strong> ${lesson.description}</p>
           <p><strong>Kapacita:</strong> ${lesson.capacity}</p>
           <p><strong>Přihlášeno:</strong> ${participantCount}</p>
-          ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i") // TODO chekc funguje?
+          ${lesson.date < flatpickr.formatDate(new Date(), "d-m-Y H:i")
             ? `<p>Událost již proběhla</p>`
             : alreadyJoined
             ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
@@ -436,13 +432,9 @@ function renderLessonList() {
   });
 }
 
-updateHeader(); // TODO is necessary
-
 
 // Určí, jaký stav aplikace má být načten na základě URL
 function initializeAppStateFromUrl() {
-  // TODO init data ?
-
   const path = window.location.pathname;
 
   if (path === '/Reservario' || path === '/Reservario/') {
@@ -476,7 +468,7 @@ window.addEventListener('popstate', function(event) {
   if (state) {
     switch (state.page) {
       case 'lessonDetail':
-        if (state.id && lessons.some(l => l.id === state.id)) { // TODO rename state.id
+        if (state.id && lessons.some(l => l.id === state.id)) {
           updateHeader();
           showLessonDetails(state.id);
         }  else {
@@ -515,4 +507,31 @@ function createArrowSVG(direction) {
 
   svg.appendChild(path);
   return svg;
+}
+
+
+window.addEventListener('offline', handleOnlineStatusChange);
+function displayOfflineMessage() {
+  const statusElement = document.getElementById('network-status');
+  if (statusElement) {
+    statusElement.style.display = 'block';
+  }
+}
+
+window.addEventListener('online', handleOnlineStatusChange);
+function displayOnlineMessage() {
+  const statusElement = document.getElementById('network-status');
+  if (statusElement) {
+    statusElement.style.display = 'none';
+  }
+}
+
+function handleOnlineStatusChange() {
+  if (navigator.onLine) {
+    console.log("Připojení obnoveno.");
+    displayOnlineMessage();
+  } else {
+    console.log("Připojení ztraceno.");
+    displayOfflineMessage();
+  }
 }
