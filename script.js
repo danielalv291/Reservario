@@ -166,7 +166,7 @@ function renderCalendar() {
             div.classList.add('lesson-available');
           }
           div.textContent = `${lesson.title} (${lesson.date.slice(11, 16)})`;
-          div.onclick = () => openLessonModal(lesson);
+          div.onclick = () => openLessonModal(lesson.id);
           return div;
         });
 
@@ -196,7 +196,13 @@ nextBtn.onclick = () => {
   renderCalendar();
 };
 
-function openLessonModal(lesson) {
+function openLessonModal(lessonId) {
+  let lesson = lessons.some(l => l.id === lessonId);
+  if (lesson == null) {
+    window.location.href = 'notfound.html';
+  }
+      
+  console.log(lesson); // TODO
   const newUrl = window.location.origin + `/Reservario/lessons/${lesson.id}`;
   history.pushState({ page: 'lessonDetail', id: lesson.id }, '', newUrl);
 
@@ -236,7 +242,7 @@ function openLessonModal(lesson) {
       <p>Datum a čas: ${lesson.date}</p>
       <p>Kapacita: ${lesson.capacity}</p>
       <p>Obsazenost: ${participantCount}</p>
-      ${new Date(lesson.date) < new Date() 
+      ${new Date(lesson.date) < new Date()  // TODO
         ? `<p>Událost již proběhla</p>`
         : alreadyJoined
         ? `<button onclick="toggleJoin('${lesson.id}')">Odhlásit se</button>`
@@ -291,16 +297,15 @@ createLessonBtn.onclick = () => {
   const newLesson = {
     id: Date.now().toString(),
     title: 'Nová lekce',
-    date: new Date().toISOString().slice(0, 16),
-    capacity: 10,
-    instructor: currentUser.email,
+    date: flatpickr.formatDate(new Date(), "d-m-Y H:i"),
+    capacity: 8,
     attendees: [],
     description: 'Popis lekce'
   };
   lessons.push(newLesson);
   localStorage.setItem('lessons', JSON.stringify(lessons));
   renderCalendar();
-  openLessonModal(newLesson);
+  openLessonModal(newLesson.id);
 };
 
 function deleteLesson(lessonId) {
@@ -435,7 +440,7 @@ function initializeAppStateFromUrl() {
     const lessonId = path.split('/Reservario/lessons')[1];
     if (lessonId && lessons.some(lesson => lesson.id === lessonId)) {
       updateUIBasedOnAuth();
-      openLessonModal(less);    
+      openLessonModal(lessonId);    
       pageState = { page: 'lessonDetail', id: lessonId };
       history.replaceState({ page: 'lessonDetail', id: lessonId }, '', path);
     } else {
@@ -458,11 +463,10 @@ window.addEventListener('popstate', function(event) {
     // Na základě uloženého stavu vykreslete správný obsah
     switch (state.page) {
       case 'lessonDetail':
-        if (state.id && lessons.some(l => l.id === state.id)) {
+        if (state.id && lessons.some(l => l.id === state.id)) { // TODO rename state.id
           updateUIBasedOnAuth();
-          openLessonModal(lessons.some(l => l.id === state.id));
+          openLessonModal(state.id);
         }  else {
-          // Lekce s daným ID nebyla nalezena, přesměrovat na not found
           window.location.href = 'notfound.html';
         }
 

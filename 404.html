@@ -31,34 +31,16 @@
     </div>
 
     <script>
+        // pro přesměrovávání v github pages
+
         const path = window.location.pathname;
         const appBase = '/Reservario/';
-
-        // Zkontrolujte, zda je basePath URL ve skutečnosti kořenem vaší SPA
-        const baseFileName = 'index.html'; // Název vašeho hlavního souboru SPA
-
-        // Sestavte cílovou URL, která načte vaši SPA aplikaci
+        const baseFileName = 'index.html';
         let redirectPath = window.location.origin + appBase + baseFileName;
 
-        // history.replaceState() použijeme k tomu, abychom změnili aktuální záznam historie
-        // na hlavní soubor vaší SPA, aniž bychom změnili URL v adresním řádku.
-        // Tím se zabrání nekonečnému cyklu přesměrování.
+        // změnit záznam historie bez změny url
         history.replaceState(null, null, redirectPath + window.location.search + window.location.hash);
-
-        // Nyní můžete přidat logiku pro načtení správného obsahu na základě původního 'path'
-        // z history.state, až se vaše SPA načte.
-        // Většinou to znamená, že po načtení hlavní stránky 'main.html',
-        // vaše SPA bude sama analyzovat `window.location.pathname` a vykreslí správný pohled.
-
-        // Protože jsme již změnili stav historie, stránka by se měla jednoduše reloadnout
-        // na hlavní stránku, kde se pak spustí vaše SPA logika.
         window.location.reload();
-
-        // Alternativně, pokud chcete přímé přesměrování bez history API manipulace na 404.html:
-        // window.location.replace(window.location.origin + appBase + baseFileName);
-        // Ale to by "zničilo" původní URL v adresním řádku, a uživatel by se musel spoléhat
-        // na vaši aplikaci, aby ho vrátila na správný vnitřní stav.
-        // Řešení s history.replaceState je elegantnější pro SPA.
     </script>
 </body>
 </html>
