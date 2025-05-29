@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Načítání aplikace...</title>
+    <title>Loading</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,18 +31,10 @@
     </div>
 
     <script>
-        // Tato funkce se spustí, když prohlížeč načte 404.html
-        // To znamená, že uživatel přímo zadal "hlubokou" URL vaší SPA.
-
-        // Získejte plnou cestu z URL
         const path = window.location.pathname;
         const appBase = '/Reservario/';
 
-        // Zkontrolujte, zda je basePath URL ve skutečnosti kořenem vaší SPA
-        const baseFileName = 'index.html'; // Název vašeho hlavního souboru SPA
-
-        // Sestavte cílovou URL, která načte vaši SPA aplikaci
-        let redirectPath = window.location.origin + appBase + baseFileName;
+        let redirectPath = window.location.origin + appBase;
 
         // history.replaceState() použijeme k tomu, abychom změnili aktuální záznam historie
         // na hlavní soubor vaší SPA, aniž bychom změnili URL v adresním řádku.
