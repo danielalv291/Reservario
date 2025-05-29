@@ -7,8 +7,12 @@ function initUsers() {
     users.push({ email: 'instruktor@email.cz', password: 'instruktor@email.cz', role: 'instructor' });
     localStorage.setItem('users', JSON.stringify(users));
   }
-  if (!users.some(u => u.email === 'user@email.cz')) {
-    users.push({ email: 'user@email.cz', password: 'user@email.cz', role: 'user' });
+  if (!users.some(u => u.email === 'a')) {
+    users.push({ email: 'a', password: 'a', role: 'user' });
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  if (!users.some(u => u.email === 'b')) {
+    users.push({ email: 'b', password: 'b', role: 'user' });
     localStorage.setItem('users', JSON.stringify(users));
   }
 }
@@ -113,7 +117,9 @@ let currentMonth = new Date().getMonth();
 
 const monthLabel = document.getElementById('month-label');
 const prevBtn = document.getElementById('prev-month');
+prevMonthButton.appendChild(createArrowSVG('left'));
 const nextBtn = document.getElementById('next-month');
+nextMonthButton.appendChild(createArrowSVG('right'));
 
 let lessons = JSON.parse(localStorage.getItem('lessons') || '[]');
 const calendarEl = document.getElementById('calendar');
@@ -489,3 +495,24 @@ window.addEventListener('popstate', function(event) {
     initializeAppStateFromUrl();
   }
 });
+
+
+// Vytvoří šipky pro posun kalendáře
+function createArrowSVG(direction) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24"); 
+  svg.setAttribute("width", "24"); 
+  svg.setAttribute("height", "24");
+  svg.setAttribute("fill", "currentColor");
+  svg.setAttribute("aria-hidden", "true");
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  if (direction === 'left') {
+    path.setAttribute("d", "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z");
+  } else if (direction === 'right') {
+      path.setAttribute("d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z");
+  }
+
+  svg.appendChild(path);
+  return svg;
+}

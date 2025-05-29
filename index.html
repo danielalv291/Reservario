@@ -68,8 +68,8 @@
   <div id="login-modal" class="modal hidden">
     <div class="modal-content">
       <h2>Přihlášení</h2>
-      <input type="email" id="login-email" placeholder="E-mail">
-      <input type="password" id="login-password" placeholder="Heslo">
+      <input type="email" id="login-email" placeholder="E-mail" required>
+      <input type="password" id="login-password" placeholder="Heslo" required maxLength="30">
       <button id="login-submit">Přihlásit</button>
       <button onclick="closeModal('login-modal')">Zavřít</button>
     </div>
@@ -79,8 +79,9 @@
   <div id="register-modal" class="modal hidden">
     <div class="modal-content">
       <h2>Registrace</h2>
-      <input type="email" id="register-email" placeholder="E-mail">
-      <input type="password" id="register-password" placeholder="Heslo">
+      <input type="email" id="register-email" placeholder="E-mail" required>
+      <input type="password" id="register-password" placeholder="Heslo" required maxLength="30" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+      title="Heslo musí mít alespoň 8 znaků, maximálně 30 zanků dlouhé, obsahovat jedno velké písmeno, jedno malé písmeno a jedno číslo.">
       <button id="register-submit">Registrovat</button>
       <button onclick="closeModal('register-modal')">Zavřít</button>
     </div>
